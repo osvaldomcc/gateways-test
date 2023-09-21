@@ -1,0 +1,26 @@
+{
+  "gateways": [
+    {
+      "id": 1,
+      "name": "Mouse",
+      "ip": "124.25.120.30"
+    }
+  ],
+  "peripherals": [
+    {
+      "id": 1,
+      "vendor": "Cisco",
+      "date": "2023-09-21T16:09:45.781Z",
+      "status": "online",
+      "gatewayId": 1
+    },
+    {
+      "id": 2,
+      "vendor": "Google",
+      "date": "2023-09-21T16:09:45.781Z",
+      "status": "offline",
+      "gatewayId": 1
+    }
+  ],
+  "profile": { "username": "invited" }
+}

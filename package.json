@@ -11,7 +11,8 @@
     "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,js,jsx,css,scss}\"",
     "prepare": "husky install",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "database": "json-server --watch ./src/database/db.json"
   },
   "dependencies": {
     "axios": "1.4.0",
