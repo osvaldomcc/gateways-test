@@ -1,0 +1,20 @@
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  & > a {
+    text-decoration: none;
+    color: var(--clr-light-black);
+    font-weight: 500;
+    font-size: 1.13rem;
+  }
+
+  &__selected {
+    color: var(--clr-indigo) !important;
+  }
+}
+
+.divider {
+  transform: rotate(45deg);
+}
