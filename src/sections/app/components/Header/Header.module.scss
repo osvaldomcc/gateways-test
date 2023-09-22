@@ -1,0 +1,20 @@
+.header {
+  border-bottom: 1px solid var(--clr-dark-gray);
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    max-width: 75em;
+    margin: auto;
+    & > a {
+      display: grid;
+      place-items: center;
+    }
+  }
+}
+
+.logo {
+  transform: rotate(45deg);
+  color: var(--clr-indigo);
+}
