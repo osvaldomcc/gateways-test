@@ -1,0 +1,22 @@
+.admin {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.wraper {
+  max-width: 75em;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.addorn {
+  position: absolute;
+  bottom: -110px;
+  left: -90px;
+  width: 12rem;
+  height: 12rem;
+  border-radius: 6rem;
+  background-color: var(--clr-indigo);
+  z-index: -1;
+}
