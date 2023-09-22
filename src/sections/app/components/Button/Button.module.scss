@@ -1,0 +1,9 @@
+.button__primary {
+  background-color: var(--clr-indigo);
+  color: var(--clr-white);
+  transition: all 0.25s;
+
+  &:hover {
+    background-color: var(--clr-dark-indigo);
+  }
+}
