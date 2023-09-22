@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import Card from '@/sections/app/components/Card';
 import { Section } from './index';
 
@@ -8,11 +10,21 @@ interface Props {
 }
 
 const SectionInfo = ({ sections }: Props) => {
+  const navigate = useNavigate();
+
+  const handleClick = (url: string) => {
+    navigate(url);
+  };
+
   return (
     <div className={styles.sections}>
-      {sections.map(({ category, amount }) => (
-        <a className={styles.sections__item}>
-          <Card key={category}>
+      {sections.map(({ category, amount, url }) => (
+        <a
+          className={styles.sections__item}
+          key={category}
+          onClick={() => handleClick(url)}
+        >
+          <Card>
             <div className={styles.card__content}>
               <h2>{category}</h2>
               <p>{amount}</p>

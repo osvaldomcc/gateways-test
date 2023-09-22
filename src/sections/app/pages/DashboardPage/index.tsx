@@ -5,7 +5,21 @@ import SectionInfo from './SectionInfo';
 export interface Section {
   category: string;
   amount: number;
+  url: string;
 }
+
+const sections: Section[] = [
+  {
+    category: 'Gateways',
+    amount: 11,
+    url: '/gateways',
+  },
+  {
+    category: 'Peripherals',
+    amount: 8,
+    url: '/peripherals',
+  },
+];
 
 const DashboardPage = () => {
   return (
@@ -31,18 +45,7 @@ const DashboardPage = () => {
           </div>
         </Card>
         <h2 className={styles.title}>Sections</h2>
-        <SectionInfo
-          sections={[
-            {
-              category: 'Gateways',
-              amount: 11,
-            },
-            {
-              category: 'Peripherals',
-              amount: 8,
-            },
-          ]}
-        />
+        <SectionInfo sections={sections} />
       </div>
       <div className={styles.addorn__one}>C</div>
       <div className={styles.addorn__two}></div>
