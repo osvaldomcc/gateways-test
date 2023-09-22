@@ -1,0 +1,12 @@
+.menu {
+  position: relative;
+
+  &__options {
+    top: 55px;
+    right: 0px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: var(--clr-white);
+    position: absolute;
+  }
+}
