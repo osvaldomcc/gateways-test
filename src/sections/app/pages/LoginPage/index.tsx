@@ -1,4 +1,5 @@
 import { IconPlugConnected } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 
 import Card from '@/sections/app/components/Card';
 import Button from '@/sections/app/components/Button';
@@ -7,6 +8,13 @@ import TextField from '@/sections/app/components/TextField';
 import styles from './LoginPage.module.scss';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
+  const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
+    ev.preventDefault();
+    navigate('/dashboard');
+  };
+
   return (
     <div className={styles.login}>
       <div className={styles.login__info}>
@@ -22,7 +30,7 @@ const LoginPage = () => {
           <Card>
             <div className={styles.login__form}>
               <h1>Login</h1>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <TextField
                   label="Username"
                   type="text"
