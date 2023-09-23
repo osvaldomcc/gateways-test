@@ -1,6 +1,7 @@
 import Card from '@/sections/app/components/Card';
 import styles from './DashboardPage.module.scss';
 import SectionInfo from './SectionInfo';
+import { routes } from '@/sections/app/routes';
 
 export interface Section {
   category: string;
@@ -12,12 +13,12 @@ const sections: Section[] = [
   {
     category: 'Gateways',
     amount: 11,
-    url: '/gateways',
+    url: routes.gateways,
   },
   {
     category: 'Peripherals',
     amount: 8,
-    url: '/peripherals',
+    url: routes.peripherals,
   },
 ];
 
@@ -47,8 +48,6 @@ const DashboardPage = () => {
         <h2 className={styles.title}>Sections</h2>
         <SectionInfo sections={sections} />
       </div>
-      <div className={styles.addorn__one}>C</div>
-      <div className={styles.addorn__two}></div>
     </div>
   );
 };
