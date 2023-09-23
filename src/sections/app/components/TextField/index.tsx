@@ -1,27 +1,28 @@
-import { useRef } from 'react';
-import type { AriaTextFieldProps } from 'react-aria';
-import { useTextField } from 'react-aria';
+import type { TextFieldProps } from 'react-aria-components';
+import {
+  Text,
+  Label,
+  Input,
+  TextField as DefaultTextField,
+} from 'react-aria-components';
 
 import styles from './TextField.module.scss';
-
-function TextField(props: AriaTextFieldProps) {
-  const { label } = props;
-  const ref = useRef(null);
-  const { labelProps, inputProps, descriptionProps, errorMessageProps } =
-    useTextField(props, ref);
-
-  return (
-    <div className={styles.form__input}>
-      <label {...labelProps}>{label}</label>
-      <input {...inputProps} ref={ref} />
-      {props.description && (
-        <div {...descriptionProps}>{props.description}</div>
-      )}
-      {props.errorMessage && (
-        <div {...errorMessageProps}>{props.errorMessage}</div>
-      )}
-    </div>
-  );
+interface Props extends TextFieldProps {
+  label?: string;
+  description?: string;
+  errorMessage?: string;
+  placeholder?: string;
 }
+
+const TextField = ({ label, description, errorMessage, ...props }: Props) => {
+  return (
+    <DefaultTextField {...props} className={styles.form__input}>
+      <Label>{label}</Label>
+      <Input />
+      {description && <Text slot="description">{description}</Text>}
+      {errorMessage && <Text slot="errorMessage">{errorMessage}</Text>}
+    </DefaultTextField>
+  );
+};
 
 export default TextField;
