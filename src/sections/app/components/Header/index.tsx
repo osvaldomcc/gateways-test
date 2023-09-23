@@ -5,17 +5,18 @@ import AvatarImg from '/images/welcome.svg';
 import Avatar from '@/sections/app/components/Avatar';
 import styles from './Header.module.scss';
 import Menu from '@/sections/app/components/Menu';
-import MenuItem from '../Menu/MenuItem';
+import MenuItem from '@/sections/app/components/Menu/MenuItem';
+import { routes } from '@/sections/app/routes';
 
 const Header = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/dashboard');
+    navigate(routes.dashboard);
   };
 
   const handleLogout = () => {
-    navigate('/login', { replace: true });
+    navigate(routes.login, { replace: true });
   };
 
   return (

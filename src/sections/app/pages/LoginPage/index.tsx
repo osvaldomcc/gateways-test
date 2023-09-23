@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Card from '@/sections/app/components/Card';
 import Button from '@/sections/app/components/Button';
 import TextField from '@/sections/app/components/TextField';
+import { routes } from '@/sections/app/routes';
 
 import styles from './LoginPage.module.scss';
 
@@ -12,7 +13,7 @@ const LoginPage = () => {
 
   const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    navigate('/dashboard');
+    navigate(routes.dashboard);
   };
 
   return (
