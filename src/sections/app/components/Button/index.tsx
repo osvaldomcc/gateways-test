@@ -5,12 +5,12 @@ import { useRef } from 'react';
 import styles from './Button.module.scss';
 
 interface Props extends AriaButtonProps {
-  variant: 'primary';
+  variant?: 'primary';
 }
 
 function Button(props: Props) {
   const ref = useRef<HTMLButtonElement>(null);
-  const { variant, ...restProps } = props;
+  const { variant = 'primary', ...restProps } = props;
   const { buttonProps } = useButton(restProps, ref);
   const { children } = restProps;
 
