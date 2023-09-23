@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+
 import { IconPlug } from '@tabler/icons-react';
 import { NavLink } from 'react-router-dom';
 
@@ -10,15 +12,21 @@ export interface NavItem {
 
 interface Props {
   items: NavItem[];
+  showNavigation?: boolean;
 }
 
-const Navigation = ({ items }: Props) => {
+const Navigation = ({ items, showNavigation = true }: Props) => {
   return (
-    <nav className={styles.navigation}>
+    <nav
+      className={styles.navigation}
+      style={{
+        opacity: showNavigation ? 1 : 0,
+        pointerEvents: showNavigation ? undefined : 'none',
+      }}
+    >
       {items.map(({ name, url }, index) => (
-        <>
+        <Fragment key={name}>
           <NavLink
-            key={name}
             to={url}
             className={({ isActive }) =>
               isActive ? styles.navigation__selected : ''
@@ -29,7 +37,7 @@ const Navigation = ({ items }: Props) => {
           {index !== items.length - 1 && (
             <IconPlug size={20} className={styles.divider} />
           )}
-        </>
+        </Fragment>
       ))}
     </nav>
   );
