@@ -4,7 +4,7 @@ export enum Status {
 }
 
 export interface Peripheral {
-  readonly uuid: string;
+  readonly id: number;
   vendor: string;
   date: string;
   status: Status;

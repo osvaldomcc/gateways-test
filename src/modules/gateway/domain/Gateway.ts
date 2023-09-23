@@ -1,5 +1,5 @@
 export interface Gateway {
-  readonly uuid: string;
+  readonly id: number;
   name: string;
   ip: string;
 }
