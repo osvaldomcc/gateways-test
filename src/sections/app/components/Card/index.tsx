@@ -1,13 +1,18 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 import styles from './Card.module.scss';
 
 interface Props {
   children: ReactNode;
+  cssStyles?: CSSProperties;
 }
 
-const Card = ({ children }: Props) => {
-  return <div className={styles.card}>{children}</div>;
+const Card = ({ children, cssStyles }: Props) => {
+  return (
+    <div className={styles.card} style={cssStyles}>
+      {children}
+    </div>
+  );
 };
 
 export default Card;
