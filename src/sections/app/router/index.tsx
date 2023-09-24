@@ -6,6 +6,8 @@ import LoginPage from '@/sections/app/pages/LoginPage';
 import DashboardPage from '@/sections/app/pages/DashboardPage';
 import GatewayPage from '@/sections/gateway/pages/GatewayPage';
 import PeripheralPage from '@/sections/peripheral/pages/PeripheralPage';
+import GatewayShowPage from '@/sections/gateway/pages/GatewayShowPage';
+import PeripheralShowPage from '@/sections/peripheral/pages/PeripheralShowPage';
 
 export const router = createBrowserRouter(
   [
@@ -40,7 +42,7 @@ export const router = createBrowserRouter(
                 },
                 {
                   path: ':id/show',
-                  element: <GatewayPage />,
+                  element: <GatewayShowPage />,
                 },
                 {
                   path: ':id/edit',
@@ -62,7 +64,7 @@ export const router = createBrowserRouter(
                 },
                 {
                   path: ':id/show',
-                  element: <PeripheralPage />,
+                  element: <PeripheralShowPage />,
                 },
                 {
                   path: ':id/edit',

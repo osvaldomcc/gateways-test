@@ -1,0 +1,9 @@
+.card {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+
+  &__content {
+    padding: 1rem;
+  }
+}
