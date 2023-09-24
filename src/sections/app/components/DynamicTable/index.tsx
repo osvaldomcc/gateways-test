@@ -39,6 +39,7 @@ interface Props<T> {
   title?: string;
   columns: ColumnDefinition<T>[];
   rows: T[];
+  hideActions?: boolean;
   onButtonClick?: (ev: ButtonClickEvent) => void;
 }
 
@@ -47,6 +48,7 @@ const DynamicTable = <T extends { id: number }>({
   rows,
   onButtonClick,
   title = '',
+  hideActions = false,
 }: Props<T>) => {
   const handleButtonClick = (ev: ButtonClickEvent) => {
     if (onButtonClick) onButtonClick(ev);
@@ -61,7 +63,7 @@ const DynamicTable = <T extends { id: number }>({
               {name}
             </Column>
           ))}
-          <Column ariaLabel="actions">Actions</Column>
+          {!hideActions && <Column ariaLabel="actions">Actions</Column>}
         </Row>
       </TableHead>
       <TableBody>
@@ -70,20 +72,22 @@ const DynamicTable = <T extends { id: number }>({
             {columns.map(({ key }, index) => (
               <Cell key={index}>{row[key]}</Cell>
             ))}
-            <Cell className={styles.buttons}>
-              {actions.map(({ title, action, icon }, index) => (
-                <Button
-                  key={index}
-                  onPress={() =>
-                    handleButtonClick({ id: row.id, actionType: action })
-                  }
-                >
-                  <div className={styles.button__content}>
-                    {icon} {title}
-                  </div>
-                </Button>
-              ))}
-            </Cell>
+            {!hideActions && (
+              <Cell className={styles.buttons}>
+                {actions.map(({ title, action, icon }, index) => (
+                  <Button
+                    key={index}
+                    onPress={() =>
+                      handleButtonClick({ id: row.id, actionType: action })
+                    }
+                  >
+                    <div className={styles.button__content}>
+                      {icon} {title}
+                    </div>
+                  </Button>
+                ))}
+              </Cell>
+            )}
           </Row>
         ))}
       </TableBody>
