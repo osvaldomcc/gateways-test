@@ -4,30 +4,11 @@ import {
   Status,
   type Peripheral,
 } from '@/modules/peripheral/domain/Peripheral';
-import type {
-  ButtonClickEvent,
-  ColumnDefinition,
-} from '@/sections/app/components/DynamicTable';
+import type { ButtonClickEvent } from '@/sections/app/components/DynamicTable';
+import { routes } from '@/sections/app/routes';
+import { peripheralColumns } from '@/sections/peripheral/types/column';
+import { useNavigate } from 'react-router-dom';
 import styles from './PeripheralPage.module.scss';
-
-const columns: ColumnDefinition<Peripheral>[] = [
-  {
-    name: 'Id',
-    key: 'id',
-  },
-  {
-    name: 'Vendor',
-    key: 'vendor',
-  },
-  {
-    name: 'Status',
-    key: 'status',
-  },
-  {
-    name: 'Date',
-    key: 'date',
-  },
-];
 
 const rows: Peripheral[] = [
   {
@@ -51,8 +32,10 @@ const rows: Peripheral[] = [
 ];
 
 const PeripheralPage = () => {
-  const handleOnButtonClick = (ev: ButtonClickEvent) => {
-    console.log(ev);
+  const navigate = useNavigate();
+  const handleOnButtonClick = ({ id, actionType }: ButtonClickEvent) => {
+    if (actionType === 'show') navigate(routes.peripheralsShow(id));
+    if (actionType === 'edit') navigate(routes.peripheralsEdit(id));
   };
 
   return (
@@ -61,7 +44,7 @@ const PeripheralPage = () => {
         <div className={styles.card__content}>
           <DynamicTable
             title="Peripheral List"
-            columns={columns}
+            columns={peripheralColumns}
             rows={rows}
             onButtonClick={handleOnButtonClick}
           />

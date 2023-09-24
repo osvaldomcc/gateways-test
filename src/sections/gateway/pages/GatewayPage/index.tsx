@@ -1,26 +1,12 @@
+import { useNavigate } from 'react-router-dom';
+
 import Card from '@/sections/app/components/Card';
 import DynamicTable from '@/sections/app/components/DynamicTable';
 import type { Gateway } from '@/modules/gateway/domain/Gateway';
-import type {
-  ButtonClickEvent,
-  ColumnDefinition,
-} from '@/sections/app/components/DynamicTable';
+import type { ButtonClickEvent } from '@/sections/app/components/DynamicTable';
+import { routes } from '@/sections/app/routes';
+import { gatewayColumns } from '@/sections/gateway/types/column';
 import styles from './GatewayPage.module.scss';
-
-const columns: ColumnDefinition<Gateway>[] = [
-  {
-    name: 'Id',
-    key: 'id',
-  },
-  {
-    name: 'Name',
-    key: 'name',
-  },
-  {
-    name: 'IP',
-    key: 'ip',
-  },
-];
 
 const rows: Gateway[] = [
   {
@@ -46,8 +32,10 @@ const rows: Gateway[] = [
 ];
 
 const GatewayPage = () => {
-  const handleOnButtonClick = (ev: ButtonClickEvent) => {
-    console.log(ev);
+  const navigate = useNavigate();
+  const handleOnButtonClick = ({ id, actionType }: ButtonClickEvent) => {
+    if (actionType === 'show') navigate(routes.gatewaysShow(id));
+    if (actionType === 'edit') navigate(routes.gatewaysEdit(id));
   };
 
   return (
@@ -56,7 +44,7 @@ const GatewayPage = () => {
         <div className={styles.card__content}>
           <DynamicTable
             title="Gateway List"
-            columns={columns}
+            columns={gatewayColumns}
             rows={rows}
             onButtonClick={handleOnButtonClick}
           />
