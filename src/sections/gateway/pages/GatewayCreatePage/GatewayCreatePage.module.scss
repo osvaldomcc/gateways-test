@@ -1,0 +1,18 @@
+.card {
+  max-width: 30em;
+  margin: auto;
+  margin-top: 2rem;
+
+  & button {
+    width: 100%;
+  }
+
+  &__content {
+    padding: 1rem;
+
+    & > h1 {
+      text-align: center;
+      font-size: 1.5rem;
+    }
+  }
+}
