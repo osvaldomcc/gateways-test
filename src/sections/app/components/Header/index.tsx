@@ -7,15 +7,18 @@ import styles from './Header.module.scss';
 import Menu from '@/sections/app/components/Menu';
 import MenuItem from '@/sections/app/components/Menu/MenuItem';
 import { routes } from '@/sections/app/routes';
+import { useAuthContext } from '@/sections/app/hooks/useAuthContext';
 
 const Header = () => {
   const navigate = useNavigate();
+  const { user, handleUser } = useAuthContext();
 
   const handleClick = () => {
     navigate(routes.dashboard);
   };
 
   const handleLogout = () => {
+    handleUser({ name: '' });
     navigate(routes.login, { replace: true });
   };
 
@@ -25,7 +28,7 @@ const Header = () => {
         <a onClick={handleClick}>
           <IconPlugConnected size={40} className={styles.logo} />
         </a>
-        <Menu trigger={<Avatar img={AvatarImg} name="User" />}>
+        <Menu trigger={<Avatar img={AvatarImg} name={user.name} />}>
           <MenuItem
             action={handleLogout}
             name="Logout"

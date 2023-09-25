@@ -7,13 +7,16 @@ import Button from '@/sections/app/components/Button';
 import TextField from '@/sections/app/components/TextField';
 import { routes } from '@/sections/app/routes';
 import { LoginSchema } from '@/sections/app/utils/LoginSchema';
-
+import { useAuthContext } from '@/sections/app/hooks/useAuthContext';
+import type { User } from '@/modules/user/domain/User';
 import styles from './LoginPage.module.scss';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { handleUser } = useAuthContext();
 
-  const handleSubmit = () => {
+  const handleSubmit = (user: User) => {
+    handleUser(user);
     navigate(routes.dashboard);
   };
 

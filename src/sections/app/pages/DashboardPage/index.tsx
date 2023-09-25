@@ -2,6 +2,7 @@ import Card from '@/sections/app/components/Card';
 import styles from './DashboardPage.module.scss';
 import SectionInfo from './SectionInfo';
 import { routes } from '@/sections/app/routes';
+import { useAuthContext } from '@/sections/app/hooks/useAuthContext';
 
 export interface Section {
   category: string;
@@ -23,6 +24,7 @@ const sections: Section[] = [
 ];
 
 const DashboardPage = () => {
+  const { user } = useAuthContext();
   return (
     <div className={styles.dashboard}>
       <div className={styles.wrapper}>
@@ -30,7 +32,7 @@ const DashboardPage = () => {
           <div className={styles.card}>
             <div className={styles.card__content}>
               <h1>
-                Hello <span>Jhon!</span>
+                Hello <span>{user.name}!</span>
               </h1>
               <p>
                 It is great to have you here. To start interacting, you can
