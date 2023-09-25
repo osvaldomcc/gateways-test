@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import styles from './Button.module.scss';
 
 interface Props extends AriaButtonProps {
-  variant?: 'primary';
+  variant?: 'primary' | 'secondary';
 }
 
 function Button(props: Props) {
@@ -16,6 +16,7 @@ function Button(props: Props) {
 
   const variantsMap = {
     primary: styles.button__primary,
+    secondary: styles.button__secondary,
   };
 
   return (

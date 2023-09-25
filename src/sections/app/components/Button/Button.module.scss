@@ -1,9 +1,19 @@
 .button__primary {
   background-color: var(--clr-indigo);
   color: var(--clr-white);
-  transition: all 0.25s;
 
   &:hover {
     background-color: var(--clr-dark-indigo);
+  }
+}
+
+.button__secondary {
+  color: #2c3e50;
+  background-color: var(--clr-lightest-gray);
+
+  &:hover {
+    box-shadow: none;
+    transform: none;
+    background: var(--clr-whitesmoke);
   }
 }
