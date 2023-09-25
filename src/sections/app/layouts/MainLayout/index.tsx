@@ -1,8 +1,9 @@
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
 const MainLayout = () => {
   return (
     <main>
+      <Navigate to="/login" replace />
       <Outlet />
     </main>
   );
