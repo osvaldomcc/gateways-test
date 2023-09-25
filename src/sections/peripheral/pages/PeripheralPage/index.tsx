@@ -1,13 +1,12 @@
+import { useNavigate } from 'react-router-dom';
+
 import Card from '@/sections/app/components/Card';
 import DynamicTable from '@/sections/app/components/DynamicTable';
-import {
-  Status,
-  type Peripheral,
-} from '@/modules/peripheral/domain/Peripheral';
+import { Status } from '@/modules/peripheral/domain/Peripheral';
+import type { Peripheral } from '@/modules/peripheral/domain/Peripheral';
 import type { ButtonClickEvent } from '@/sections/app/components/DynamicTable';
 import { routes } from '@/sections/app/routes';
 import { peripheralColumns } from '@/sections/peripheral/types/column';
-import { useNavigate } from 'react-router-dom';
 import styles from './PeripheralPage.module.scss';
 
 const rows: Peripheral[] = [
@@ -38,6 +37,10 @@ const PeripheralPage = () => {
     if (actionType === 'edit') navigate(routes.peripheralsEdit(id));
   };
 
+  const handleAddButtonClick = () => {
+    alert('asd');
+  };
+
   return (
     <div className={styles.card}>
       <Card>
@@ -47,6 +50,7 @@ const PeripheralPage = () => {
             columns={peripheralColumns}
             rows={rows}
             onButtonClick={handleOnButtonClick}
+            onAddButtonClick={handleAddButtonClick}
           />
         </div>
       </Card>
