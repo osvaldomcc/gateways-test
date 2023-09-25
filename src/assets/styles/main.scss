@@ -12,6 +12,8 @@
   --clr-white: white;
   --clr-transparent-black: rgba(0, 0, 0, 0.185);
   --clr-red: rgb(240, 70, 70);
+  --clr-lightest-gray: #edeaea;
+  --clr-whitesmoke: whitesmoke;
 
   --color-background: var(--clr-light-gray);
   --color-text: var(--clr-light-black);
@@ -73,6 +75,7 @@ button {
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
+  transition: all 0.25s;
 
   &:disabled {
     background-color: var(--clr-dark-gray);
