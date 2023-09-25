@@ -1,0 +1,20 @@
+.form__input {
+  padding: 10px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid var(--clr-dark-gray);
+  transition: all 0.25s;
+  margin-top: -15px;
+
+  &:focus {
+    border: 1px solid var(--clr-indigo);
+  }
+}
+
+.label {
+  font-weight: bold;
+}
+
+.error {
+  color: var(--clr-red);
+}
