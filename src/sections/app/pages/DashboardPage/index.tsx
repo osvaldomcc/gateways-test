@@ -42,6 +42,7 @@ const DashboardPage = () => {
               alt="welcome-image"
               width="175"
               height="191"
+              loading="lazy"
             />
           </div>
         </Card>

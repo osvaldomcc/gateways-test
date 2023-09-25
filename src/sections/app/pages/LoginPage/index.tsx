@@ -40,7 +40,7 @@ const LoginPage = () => {
                 <Form noValidate>
                   <TextField
                     name="name"
-                    label="name"
+                    label="Name"
                     type="text"
                     placeholder="Introduce your name"
                   />
