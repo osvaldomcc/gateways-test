@@ -38,6 +38,10 @@ const GatewayPage = () => {
     if (actionType === 'edit') navigate(routes.gatewaysEdit(id));
   };
 
+  const handleAddButtonClick = () => {
+    navigate(routes.gatewaysCreate);
+  };
+
   return (
     <div className={styles.card}>
       <Card>
@@ -47,6 +51,7 @@ const GatewayPage = () => {
             columns={gatewayColumns}
             rows={rows}
             onButtonClick={handleOnButtonClick}
+            onAddButtonClick={handleAddButtonClick}
           />
         </div>
       </Card>
