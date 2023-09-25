@@ -7,9 +7,11 @@ import DashboardPage from '@/sections/app/pages/DashboardPage';
 import GatewayPage from '@/sections/gateway/pages/GatewayPage';
 import GatewayShowPage from '@/sections/gateway/pages/GatewayShowPage';
 import GatewayCreatePage from '@/sections/gateway/pages/GatewayCreatePage';
+import GatewayEditPage from '@/sections/gateway/pages/GatewayEditPage';
 import PeripheralPage from '@/sections/peripheral/pages/PeripheralPage';
 import PeripheralShowPage from '@/sections/peripheral/pages/PeripheralShowPage';
-import GatewayEditPage from '@/sections/gateway/pages/GatewayEditPage copy';
+import PeripheralCreatePage from '@/sections/peripheral/pages/PeripheralCreatePage';
+import PeripheralEditPage from '@/sections/peripheral/pages/PeripheralEditPage';
 
 export const router = createBrowserRouter(
   [
@@ -62,7 +64,7 @@ export const router = createBrowserRouter(
                 },
                 {
                   path: 'create',
-                  element: <PeripheralPage />,
+                  element: <PeripheralCreatePage />,
                 },
                 {
                   path: ':id/show',
@@ -70,7 +72,7 @@ export const router = createBrowserRouter(
                 },
                 {
                   path: ':id/edit',
-                  element: <PeripheralPage />,
+                  element: <PeripheralEditPage />,
                 },
               ],
             },
