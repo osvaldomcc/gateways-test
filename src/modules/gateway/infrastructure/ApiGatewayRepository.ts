@@ -1,5 +1,9 @@
 import type { Http } from '@/modules/app/domain/Http';
-import type { Gateway, GatewayBody } from '@/modules/gateway/domain/Gateway';
+import type {
+  Gateway,
+  GatewayBody,
+  GatewayWithDependency,
+} from '@/modules/gateway/domain/Gateway';
 import type { GatewayRepository } from '@/modules/gateway/domain/GatewayRepository';
 
 const GatewayApiUrl = `${import.meta.env.VITE_API_URL}/gateways`;
@@ -7,6 +11,15 @@ const GatewayApiUrl = `${import.meta.env.VITE_API_URL}/gateways`;
 export function createApiGatewayRepository(_http: Http): GatewayRepository {
   const get = async (id: number): Promise<Gateway | null> => {
     const response = await _http.get<Gateway>(`${GatewayApiUrl}/${id}`);
+    return response.data;
+  };
+
+  const getWithDependency = async (
+    id: number,
+  ): Promise<GatewayWithDependency | null> => {
+    const response = await _http.get<GatewayWithDependency>(
+      `${GatewayApiUrl}/${id}?_embed=peripherals`,
+    );
     return response.data;
   };
 
@@ -42,5 +55,6 @@ export function createApiGatewayRepository(_http: Http): GatewayRepository {
     create,
     update,
     delete: remove,
+    getWithDependency,
   };
 }
