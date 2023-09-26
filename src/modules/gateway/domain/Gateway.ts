@@ -3,3 +3,5 @@ export interface Gateway {
   name: string;
   ip: string;
 }
+
+export type GatewayBody = Omit<Gateway, 'id'>;
