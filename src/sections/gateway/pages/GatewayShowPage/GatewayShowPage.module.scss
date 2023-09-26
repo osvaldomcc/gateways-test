@@ -1,9 +1,36 @@
 .card {
   display: flex;
+  flex-direction: column;
   gap: 2rem;
   margin-top: 2rem;
 
   &__content {
     padding: 1rem;
+  }
+}
+
+.link {
+  color: var(--clr-indigo);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.25s;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (min-width: 48em) {
+  .card {
+    flex-direction: row;
   }
 }
