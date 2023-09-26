@@ -1,54 +1,52 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
 import Card from '@/sections/app/components/Card';
 import DynamicTable from '@/sections/app/components/DynamicTable';
-import { Status } from '@/modules/peripheral/domain/Peripheral';
-import type { Peripheral } from '@/modules/peripheral/domain/Peripheral';
 import type { ButtonClickEvent } from '@/sections/app/components/DynamicTable';
 import { routes } from '@/sections/app/routes';
 import { peripheralColumns } from '@/sections/peripheral/types/column';
 import Modal from '@/sections/app/components/Modal';
 import Button from '@/sections/app/components/Button';
 import styles from './PeripheralPage.module.scss';
-
-const rows: Peripheral[] = [
-  {
-    id: 1,
-    vendor: 'Cisco',
-    status: Status.ONLINE,
-    date: new Date().toISOString(),
-  },
-  {
-    id: 2,
-    vendor: 'Google',
-    status: Status.OFFLINE,
-    date: new Date().toISOString(),
-  },
-  {
-    id: 3,
-    vendor: 'Amazon',
-    status: Status.OFFLINE,
-    date: new Date().toISOString(),
-  },
-];
+import usePeripherals from '@/sections/peripheral/hooks/usePeripherals';
 
 const PeripheralPage = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleCloseModal = () => setShowModal(false);
+  const {
+    peripherals,
+    getAllPeripherals,
+    deletePeripheralById,
+    isLoading,
+    error,
+  } = usePeripherals();
+  const [selectedPeripheral, setSelectedPeripheral] = useState<number>(0);
 
   const navigate = useNavigate();
 
   const handleOnButtonClick = ({ id, actionType }: ButtonClickEvent) => {
     if (actionType === 'show') navigate(routes.peripheralsShow(id));
     if (actionType === 'edit') navigate(routes.peripheralsEdit(id));
-    if (actionType === 'delete') setShowModal(true);
+    if (actionType === 'delete') {
+      setSelectedPeripheral(id);
+      setShowModal(true);
+    }
   };
 
   const handleAddButtonClick = () => {
     navigate(routes.peripheralsCreate);
   };
+
+  const handleDelete = () => {
+    deletePeripheralById(selectedPeripheral);
+    setShowModal(false);
+  };
+
+  useEffect(() => {
+    getAllPeripherals();
+  }, []);
 
   return (
     <div className={styles.card}>
@@ -57,9 +55,11 @@ const PeripheralPage = () => {
           <DynamicTable
             title="Peripheral List"
             columns={peripheralColumns}
-            rows={rows}
+            rows={peripherals}
             onButtonClick={handleOnButtonClick}
             onAddButtonClick={handleAddButtonClick}
+            hasError={Boolean(error)}
+            isLoading={isLoading}
           />
         </div>
       </Card>
@@ -69,7 +69,7 @@ const PeripheralPage = () => {
         title="Remove Peripheral"
         bottom={
           <>
-            <Button>Delete</Button>
+            <Button onPress={handleDelete}>Delete</Button>
             <Button variant="secondary" onPress={handleCloseModal}>
               Cancel
             </Button>
