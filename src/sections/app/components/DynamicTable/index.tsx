@@ -108,6 +108,15 @@ const DynamicTable = <T extends { id: number }>({
               )}
             </Row>
           ))}
+          {rows.length === 0 && (
+            <Row>
+              <Cell colSpan={columns.length + 1}>
+                <h3 className={styles.no__content}>
+                  There are not items to show
+                </h3>
+              </Cell>
+            </Row>
+          )}
         </TableBody>
       </Table>
     </>
