@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 
 import { IconPlug } from '@tabler/icons-react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import styles from './Navigation.module.scss';
 
@@ -16,6 +16,8 @@ interface Props {
 }
 
 const Navigation = ({ items, showNavigation = true }: Props) => {
+  const { pathname } = useLocation();
+
   return (
     <nav
       className={styles.navigation}
@@ -28,9 +30,7 @@ const Navigation = ({ items, showNavigation = true }: Props) => {
         <Fragment key={name}>
           <NavLink
             to={url}
-            className={({ isActive }) =>
-              isActive ? styles.navigation__selected : ''
-            }
+            className={url === pathname ? styles.navigation__selected : ''}
           >
             {name}
           </NavLink>
