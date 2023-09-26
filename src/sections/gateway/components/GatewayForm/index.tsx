@@ -1,4 +1,5 @@
 import { Form, Formik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 
 import TextField from '@/sections/app/components/TextField';
 import Button from '@/sections/app/components/Button';
@@ -15,6 +16,11 @@ interface Props {
 }
 
 const GatewayForm = ({ initialValues, onSubmit, isEdit = false }: Props) => {
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    navigate(-1);
+  };
   return (
     <Formik
       initialValues={initialValues}
@@ -25,7 +31,12 @@ const GatewayForm = ({ initialValues, onSubmit, isEdit = false }: Props) => {
       <Form noValidate className={styles.form}>
         <TextField placeholder="Cisco..." label="Name" name="name" />
         <TextField placeholder="120.4.2.10" label="Ip" name="ip" />
-        <Button type="submit">{isEdit ? 'Update' : 'Add'}</Button>
+        <div className={styles.buttons}>
+          <Button type="submit">{isEdit ? 'Update' : 'Add'}</Button>
+          <Button type="button" variant="secondary" onPress={handleCancel}>
+            Cancel
+          </Button>
+        </div>
       </Form>
     </Formik>
   );
