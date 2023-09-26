@@ -3,10 +3,6 @@ import { useState } from 'react';
 import { getAllPeripheral } from '@/modules/peripheral/application/get-all/getAllPeripheral';
 import { createApiPeripheralRepository } from '@/modules/peripheral/infrastructure/ApiPeripheralRepository';
 import { HttpInstance } from '@/sections/app/utils/HttpInstance';
-import {
-  Peripheral,
-  PeripheralBody,
-} from '@/modules/peripheral/domain/Peripheral';
 import { getPeripheral } from '@/modules/peripheral/application/get/getPeripheral';
 import { createPeripheral } from '@/modules/peripheral/application/create/createPeripheral';
 import { updatePeripheral } from '@/modules/peripheral/application/update/updatePeripheral';
@@ -14,10 +10,16 @@ import { deletePeripheral } from '@/modules/peripheral/application/delete/delete
 import { useNavigate } from 'react-router-dom';
 import { routes } from '@/sections/app/routes';
 import { Notify } from '@/sections/app/utils/Notification';
+import type {
+  Peripheral,
+  PeripheralBody,
+} from '@/modules/peripheral/domain/Peripheral';
+
+type Error = { message: string };
 
 const usePeripherals = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
   const [peripherals, setPeripherals] = useState<Peripheral[]>([]);
   const [peripheral, setPeripheral] = useState<Peripheral | null>(null);
 
@@ -32,7 +34,11 @@ const usePeripherals = () => {
 
   const reset = () => {
     setIsLoading(true);
-    setError(false);
+    setError('');
+  };
+
+  const handleError = (err: Error) => {
+    setError(err.message);
   };
 
   const getAllPeripherals = async () => {
@@ -41,7 +47,7 @@ const usePeripherals = () => {
       const response = await getAll();
       setPeripherals(response);
     } catch (err) {
-      setError(true);
+      handleError(err as Error);
     } finally {
       setIsLoading(false);
     }
@@ -53,7 +59,7 @@ const usePeripherals = () => {
       const response = await get(id);
       setPeripheral(response);
     } catch (err) {
-      setError(true);
+      handleError(err as Error);
     } finally {
       setIsLoading(false);
     }
@@ -64,8 +70,9 @@ const usePeripherals = () => {
       reset();
       await create(newPeripheral);
       navigate(routes.peripherals, { replace: true });
+      Notify.success('The peripheral was created successfully');
     } catch (err) {
-      setError(true);
+      handleError(err as Error);
     } finally {
       setIsLoading(false);
     }
@@ -81,7 +88,7 @@ const usePeripherals = () => {
       navigate(routes.peripherals, { replace: true });
       Notify.success('The peripheral was updated successfully');
     } catch (err) {
-      setError(true);
+      handleError(err as Error);
     } finally {
       setIsLoading(false);
     }
@@ -94,7 +101,7 @@ const usePeripherals = () => {
       setPeripherals(peripherals.filter((item) => item.id !== id));
       Notify.success('The peripheral was deleted successfully');
     } catch (err) {
-      setError(true);
+      handleError(err as Error);
     } finally {
       setIsLoading(false);
     }
