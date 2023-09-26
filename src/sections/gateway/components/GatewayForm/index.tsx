@@ -3,10 +3,10 @@ import { Form, Formik } from 'formik';
 import TextField from '@/sections/app/components/TextField';
 import Button from '@/sections/app/components/Button';
 import { GatewaySchema } from '@/sections/gateway/utils/GatewaySchema';
-import type { Gateway } from '@/modules/gateway/domain/Gateway';
+import type { GatewayBody } from '@/modules/gateway/domain/Gateway';
 import styles from './GatewayForm.module.scss';
 
-export type GatewayFormType = Omit<Gateway, 'id'>;
+export type GatewayFormType = GatewayBody;
 
 interface Props {
   initialValues: GatewayFormType;
@@ -20,6 +20,7 @@ const GatewayForm = ({ initialValues, onSubmit, isEdit = false }: Props) => {
       initialValues={initialValues}
       validationSchema={GatewaySchema}
       onSubmit={onSubmit}
+      enableReinitialize
     >
       <Form noValidate className={styles.form}>
         <TextField placeholder="Cisco..." label="Name" name="name" />
