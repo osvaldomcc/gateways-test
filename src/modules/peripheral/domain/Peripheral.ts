@@ -9,3 +9,5 @@ export interface Peripheral {
   date: string;
   status: Status;
 }
+
+export type PeripheralBody = Omit<Peripheral, 'id'>;
