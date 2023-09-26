@@ -15,7 +15,8 @@ import useGateways from '@/sections/gateway/hooks/useGateways';
 const GatewayPage = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleCloseModal = () => setShowModal(false);
-  const { gateways, getAllGateways, deleteGatewayById } = useGateways();
+  const { gateways, getAllGateways, deleteGatewayById, isLoading, error } =
+    useGateways();
   const [selectedGateway, setSelectedGateway] = useState<number>(0);
 
   const navigate = useNavigate();
@@ -52,6 +53,8 @@ const GatewayPage = () => {
             rows={gateways}
             onButtonClick={handleOnButtonClick}
             onAddButtonClick={handleAddButtonClick}
+            hasError={Boolean(error)}
+            isLoading={isLoading}
           />
         </div>
       </Card>
