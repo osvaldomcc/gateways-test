@@ -1,8 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import {
   IconEdit,
   IconFileInfo,
   IconTrash,
   IconPlus,
+  IconChevronLeft,
 } from '@tabler/icons-react';
 
 import Cell from '@/sections/app/components/Table/Cell';
@@ -47,6 +49,9 @@ interface Props<T> {
   hideActions?: boolean;
   onButtonClick?: (ev: ButtonClickEvent) => void;
   onAddButtonClick?: () => void;
+  isLoading: boolean;
+  hasError: boolean;
+  showBackButton?: boolean;
 }
 
 const DynamicTable = <T extends { id: number }>({
@@ -56,7 +61,12 @@ const DynamicTable = <T extends { id: number }>({
   hideActions = false,
   onButtonClick,
   onAddButtonClick,
+  isLoading,
+  hasError,
+  showBackButton = false,
 }: Props<T>) => {
+  const navigate = useNavigate();
+
   const handleButtonClick = (ev: ButtonClickEvent) => {
     if (onButtonClick) onButtonClick(ev);
   };
@@ -65,14 +75,27 @@ const DynamicTable = <T extends { id: number }>({
     if (onAddButtonClick) onAddButtonClick();
   };
 
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
   return (
     <>
-      <Button onPress={handleAddButtonClick}>
-        <div className={styles.button__content}>
-          <IconPlus size={20} />
-          Add
+      {!hideActions && (
+        <Button onPress={handleAddButtonClick}>
+          <div className={styles.button__content}>
+            <IconPlus size={20} />
+            Add
+          </div>
+        </Button>
+      )}
+      {showBackButton && (
+        <div>
+          <Button onPress={handleBackClick}>
+            <IconChevronLeft size={20} />
+          </Button>
         </div>
-      </Button>
+      )}
       <Table title={title}>
         <TableHead>
           <Row>
@@ -81,38 +104,57 @@ const DynamicTable = <T extends { id: number }>({
                 {name}
               </Column>
             ))}
+
             {!hideActions && <Column ariaLabel="actions">Actions</Column>}
           </Row>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.id}>
-              {columns.map(({ key }, index) => (
-                <Cell key={index}>{row[key]}</Cell>
-              ))}
-              {!hideActions && (
-                <Cell className={styles.buttons}>
-                  {actions.map(({ title, action, icon }, index) => (
-                    <Button
-                      key={index}
-                      onPress={() =>
-                        handleButtonClick({ id: row.id, actionType: action })
-                      }
-                    >
-                      <div className={styles.button__content}>
-                        {icon} {title}
-                      </div>
-                    </Button>
-                  ))}
-                </Cell>
-              )}
-            </Row>
-          ))}
-          {rows.length === 0 && (
+          {!isLoading &&
+            !hasError &&
+            rows.map((row) => (
+              <Row key={row.id}>
+                {columns.map(({ key }, index) => (
+                  <Cell key={index}>{row[key]}</Cell>
+                ))}
+                {!hideActions && (
+                  <Cell className={styles.buttons}>
+                    {actions.map(({ title, action, icon }, index) => (
+                      <Button
+                        key={index}
+                        onPress={() =>
+                          handleButtonClick({ id: row.id, actionType: action })
+                        }
+                      >
+                        <div className={styles.button__content}>
+                          {icon} {title}
+                        </div>
+                      </Button>
+                    ))}
+                  </Cell>
+                )}
+              </Row>
+            ))}
+          {!isLoading && !hasError && rows.length === 0 && (
             <Row>
               <Cell colSpan={columns.length + 1}>
                 <h3 className={styles.no__content}>
                   There are not items to show
+                </h3>
+              </Cell>
+            </Row>
+          )}
+          {isLoading && !hasError && (
+            <Row>
+              <Cell colSpan={columns.length + 1}>
+                <h3 className={styles.no__content}>Loading...</h3>
+              </Cell>
+            </Row>
+          )}
+          {!isLoading && hasError && (
+            <Row>
+              <Cell colSpan={columns.length + 1}>
+                <h3 className={styles.no__content}>
+                  Oops, There was an error fetching the data
                 </h3>
               </Cell>
             </Row>
