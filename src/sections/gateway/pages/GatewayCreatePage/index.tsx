@@ -4,6 +4,7 @@ import GatewayForm, {
 } from '@/sections/gateway/components/GatewayForm';
 import useGateways from '@/sections/gateway/hooks/useGateways';
 import styles from './GatewayCreatePage.module.scss';
+import Alert from '@/sections/app/components/Alert';
 
 const initialValues: GatewayFormType = {
   name: '',
@@ -11,7 +12,7 @@ const initialValues: GatewayFormType = {
 };
 
 const GatewayCreatePage = () => {
-  const { addGateway } = useGateways();
+  const { addGateway, error } = useGateways();
 
   const handleSubmit = (gateway: GatewayFormType) => {
     addGateway(gateway);
@@ -19,6 +20,7 @@ const GatewayCreatePage = () => {
 
   return (
     <div className={styles.card}>
+      {error && <Alert>{error}</Alert>}
       <Card>
         <div className={styles.card__content}>
           <h1>Add Gateway</h1>
