@@ -2,6 +2,7 @@
   position: relative;
   min-height: 100vh;
   overflow: hidden;
+  padding: 0 1rem;
 }
 
 .wraper {
@@ -19,4 +20,10 @@
   border-radius: 6rem;
   background-color: var(--clr-indigo);
   z-index: -1;
+}
+
+@media only screen and (min-width: 48em) {
+  .header {
+    padding: 0;
+  }
 }
