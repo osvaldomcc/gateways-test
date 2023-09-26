@@ -1,0 +1,12 @@
+.alert {
+  padding: 1rem;
+  border-radius: 6px;
+  margin: 5px;
+  font-weight: bold;
+  text-align: center;
+
+  &__primary {
+    color: var(--clr-dark-red);
+    background-color: var(--clr-light-red);
+  }
+}
