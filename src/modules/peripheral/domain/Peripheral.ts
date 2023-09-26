@@ -8,6 +8,7 @@ export interface Peripheral {
   vendor: string;
   date: string;
   status: Status;
+  gatewayId: number;
 }
 
 export type PeripheralBody = Omit<Peripheral, 'id'>;
