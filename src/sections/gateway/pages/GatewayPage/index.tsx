@@ -43,6 +43,10 @@ const GatewayPage = () => {
     getAllGateways();
   }, []);
 
+  const handleReachEnd = (page: number) => {
+    getAllGateways(page);
+  };
+
   return (
     <div className={styles.card}>
       <Card>
@@ -50,11 +54,13 @@ const GatewayPage = () => {
           <DynamicTable
             title="Gateway List"
             columns={gatewayColumns}
-            rows={gateways}
+            rows={gateways.data}
             onButtonClick={handleOnButtonClick}
             onAddButtonClick={handleAddButtonClick}
             hasError={Boolean(error)}
             isLoading={isLoading}
+            onReachEnd={handleReachEnd}
+            hasNext={gateways.hasNext}
           />
         </div>
       </Card>

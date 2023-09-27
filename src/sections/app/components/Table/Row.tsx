@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLTableRowElement> {
   children: ReactNode;
   className?: string;
 }

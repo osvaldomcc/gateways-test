@@ -14,7 +14,9 @@ import Table from '@/sections/app/components/Table';
 import TableBody from '@/sections/app/components/Table/TableBody';
 import TableHead from '@/sections/app/components/Table/TableHead';
 import Button from '@/sections/app/components/Button';
+import InfinityScroll from '@/sections/app/components/InfinityScroll';
 import styles from './DynamicTable.module.scss';
+import { useRef } from 'react';
 
 export interface ColumnDefinition<T> {
   name: string;
@@ -52,6 +54,8 @@ interface Props<T> {
   isLoading: boolean;
   hasError: boolean;
   showBackButton?: boolean;
+  hasNext?: boolean;
+  onReachEnd?: (page: number) => void;
 }
 
 const DynamicTable = <T extends { id: number }>({
@@ -64,7 +68,10 @@ const DynamicTable = <T extends { id: number }>({
   isLoading,
   hasError,
   showBackButton = false,
+  hasNext = false,
+  onReachEnd,
 }: Props<T>) => {
+  const page = useRef<number>(2);
   const navigate = useNavigate();
 
   const handleButtonClick = (ev: ButtonClickEvent) => {
@@ -77,6 +84,10 @@ const DynamicTable = <T extends { id: number }>({
 
   const handleBackClick = () => {
     navigate(-1);
+  };
+
+  const handleReachEnd = () => {
+    if (onReachEnd && hasNext) onReachEnd(page.current++);
   };
 
   return (
@@ -96,22 +107,20 @@ const DynamicTable = <T extends { id: number }>({
           </Button>
         </div>
       )}
-      <Table title={title}>
-        <TableHead>
-          <Row>
-            {columns.map(({ name }, index) => (
-              <Column ariaLabel="id" key={index}>
-                {name}
-              </Column>
-            ))}
-
-            {!hideActions && <Column ariaLabel="actions">Actions</Column>}
-          </Row>
-        </TableHead>
-        <TableBody>
-          {!isLoading &&
-            !hasError &&
-            rows.map((row) => (
+      <div className={styles.table__content}>
+        <Table title={title}>
+          <TableHead>
+            <Row>
+              {columns.map(({ name }, index) => (
+                <Column ariaLabel="id" key={index}>
+                  {name}
+                </Column>
+              ))}
+              {!hideActions && <Column ariaLabel="actions">Actions</Column>}
+            </Row>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
               <Row key={row.id}>
                 {columns.map(({ key }, index) => (
                   <Cell key={index}>{row[key]}</Cell>
@@ -122,7 +131,10 @@ const DynamicTable = <T extends { id: number }>({
                       <Button
                         key={index}
                         onPress={() =>
-                          handleButtonClick({ id: row.id, actionType: action })
+                          handleButtonClick({
+                            id: row.id,
+                            actionType: action,
+                          })
                         }
                       >
                         <div className={styles.button__content}>
@@ -134,33 +146,37 @@ const DynamicTable = <T extends { id: number }>({
                 )}
               </Row>
             ))}
-          {!isLoading && !hasError && rows.length === 0 && (
-            <Row>
-              <Cell colSpan={columns.length + 1}>
-                <h3 className={styles.no__content}>
-                  There are not items to show
-                </h3>
-              </Cell>
-            </Row>
-          )}
-          {isLoading && !hasError && (
-            <Row>
-              <Cell colSpan={columns.length + 1}>
-                <h3 className={styles.no__content}>Loading...</h3>
-              </Cell>
-            </Row>
-          )}
-          {!isLoading && hasError && (
-            <Row>
-              <Cell colSpan={columns.length + 1}>
-                <h3 className={styles.no__content}>
-                  Oops, There was an error fetching the data
-                </h3>
-              </Cell>
-            </Row>
-          )}
-        </TableBody>
-      </Table>
+            {!isLoading && !hasError && rows.length === 0 && (
+              <Row>
+                <Cell colSpan={columns.length + 1}>
+                  <h3 className={styles.no__content}>
+                    There are not items to show
+                  </h3>
+                </Cell>
+              </Row>
+            )}
+            {isLoading && !hasError && (
+              <Row>
+                <Cell colSpan={columns.length + 1}>
+                  <h3 className={styles.no__content}>Loading...</h3>
+                </Cell>
+              </Row>
+            )}
+            {!isLoading && hasError && (
+              <Row>
+                <Cell colSpan={columns.length + 1}>
+                  <h3 className={styles.no__content}>
+                    Oops, There was an error fetching the data
+                  </h3>
+                </Cell>
+              </Row>
+            )}
+          </TableBody>
+        </Table>
+        {onReachEnd && hasNext && (
+          <InfinityScroll onReachEnd={handleReachEnd} isLoading />
+        )}
+      </div>
     </>
   );
 };

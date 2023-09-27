@@ -12,3 +12,9 @@
 .no__content {
   text-align: center;
 }
+
+.table__content {
+  margin-top: 5px;
+  overflow: auto;
+  max-height: 65vh;
+}

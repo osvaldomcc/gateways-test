@@ -48,6 +48,10 @@ const PeripheralPage = () => {
     getAllPeripherals();
   }, []);
 
+  const handleReachEnd = (page: number) => {
+    getAllPeripherals(page);
+  };
+
   return (
     <div className={styles.card}>
       <Card>
@@ -55,11 +59,13 @@ const PeripheralPage = () => {
           <DynamicTable
             title="Peripheral List"
             columns={peripheralColumns}
-            rows={peripherals}
+            rows={peripherals.data}
             onButtonClick={handleOnButtonClick}
             onAddButtonClick={handleAddButtonClick}
             hasError={Boolean(error)}
             isLoading={isLoading}
+            onReachEnd={handleReachEnd}
+            hasNext={peripherals.hasNext}
           />
         </div>
       </Card>
