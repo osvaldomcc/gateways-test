@@ -54,7 +54,7 @@ const PeripheralEditPage = () => {
           <PeripheralForm
             initialValues={initialValues}
             onSubmit={handleSubmit}
-            gateways={gateways}
+            gateways={gateways.data}
             isEdit
           />
         </div>

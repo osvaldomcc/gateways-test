@@ -40,7 +40,7 @@ const PeripheralCreatePage = () => {
           <PeripheralForm
             initialValues={initialValues}
             onSubmit={handleSubmit}
-            gateways={gateways}
+            gateways={gateways.data}
           />
         </div>
       </Card>
