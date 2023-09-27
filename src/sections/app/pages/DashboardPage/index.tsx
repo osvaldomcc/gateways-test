@@ -3,6 +3,9 @@ import styles from './DashboardPage.module.scss';
 import SectionInfo from './SectionInfo';
 import { routes } from '@/sections/app/routes';
 import { useAuthContext } from '@/sections/app/hooks/useAuthContext';
+import useDashboard from '@/sections/app/hooks/useDashboard';
+import { useEffect } from 'react';
+import Alert from '../../components/Alert';
 
 export interface Section {
   category: string;
@@ -10,23 +13,40 @@ export interface Section {
   url: string;
 }
 
-const sections: Section[] = [
-  {
-    category: 'Gateways',
-    amount: 11,
-    url: routes.gateways,
-  },
-  {
-    category: 'Peripherals',
-    amount: 8,
-    url: routes.peripherals,
-  },
-];
-
 const DashboardPage = () => {
   const { user } = useAuthContext();
+  const {
+    gatewaysQty,
+    peripheralsQty,
+    getGatewaysAndPeripherals,
+    gatewayError,
+    peripheralError,
+  } = useDashboard();
+
+  useEffect(() => {
+    getGatewaysAndPeripherals();
+  }, []);
+
+  const sections: Section[] = [
+    {
+      category: 'Gateways',
+      amount: gatewaysQty.length,
+      url: routes.gateways,
+    },
+    {
+      category: 'Peripherals',
+      amount: peripheralsQty.length,
+      url: routes.peripherals,
+    },
+  ];
+
   return (
     <div className={styles.dashboard}>
+      {(peripheralError || gatewayError) && (
+        <Alert>
+          <h3>There was an error, please contact admin@gmail.com</h3>
+        </Alert>
+      )}
       <div className={styles.wrapper}>
         <Card>
           <div className={styles.card}>
