@@ -12,3 +12,5 @@ export interface Peripheral {
 }
 
 export type PeripheralBody = Omit<Peripheral, 'id'>;
+
+export const NAME_MIN_LENGTH = 2;

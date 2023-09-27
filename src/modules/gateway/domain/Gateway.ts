@@ -11,3 +11,5 @@ export interface GatewayWithDependency extends Gateway {
 }
 
 export type GatewayBody = Omit<Gateway, 'id'>;
+
+export const NAME_MIN_LENGTH = 2;
