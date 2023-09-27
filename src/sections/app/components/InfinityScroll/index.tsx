@@ -38,7 +38,7 @@ const InfinityScroll = ({ onReachEnd, isLoading }: IProps) => {
     <>
       <div ref={loader} />
       {isLoading && (
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} role="spinbutton">
           <div className={styles.loader}></div>
         </div>
       )}
