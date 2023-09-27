@@ -54,7 +54,7 @@ const DashboardPage = () => {
               <h1>
                 Hello <span>{user.name}!</span>
               </h1>
-              <p>
+              <p title="dashboard welcome">
                 It is great to have you here. To start interacting, you can
                 select one of the sections below.
               </p>

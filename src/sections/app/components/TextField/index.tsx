@@ -24,7 +24,7 @@ const TextField = ({ label, description, ...props }: Props) => {
       <Input {...field} />
       {description && <Text slot="description">{description}</Text>}
       {hasError && (
-        <Text slot="errorMessage" className={styles.error}>
+        <Text slot="errorMessage" className={styles.error} role="alert">
           {meta.error}
         </Text>
       )}

@@ -20,7 +20,12 @@ const Modal = ({
     <>
       {showModal && (
         <>
-          <div className={styles.dark__bg} onClick={onCloseModal} />
+          <div
+            className={styles.dark__bg}
+            onClick={onCloseModal}
+            role="dialog"
+            aria-labelledby="deleteDialog"
+          />
           <div className={styles.centered}>
             <div className={styles.modal}>
               <div className={styles.modal__header}>
