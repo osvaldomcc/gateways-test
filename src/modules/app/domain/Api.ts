@@ -4,3 +4,5 @@ export interface ApiResponse<T> {
   statusText: string;
   headers: Headers;
 }
+
+export type ApiPaginate<T> = { data: T; hasNext: boolean };
