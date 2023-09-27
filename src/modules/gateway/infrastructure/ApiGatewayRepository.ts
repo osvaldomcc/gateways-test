@@ -1,3 +1,4 @@
+import { ApiPaginate } from '@/modules/app/domain/Api';
 import type { Http } from '@/modules/app/domain/Http';
 import type {
   Gateway,
@@ -23,9 +24,20 @@ export function createApiGatewayRepository(_http: Http): GatewayRepository {
     return response.data;
   };
 
-  const getAll = async (): Promise<Gateway[]> => {
-    const response = await _http.get<Gateway[]>(GatewayApiUrl);
-    return response.data;
+  const getAll = async (
+    page: number = 1,
+    limit: number = 10,
+  ): Promise<ApiPaginate<Gateway[]>> => {
+    const urlParams = new URLSearchParams();
+    urlParams.append('_page', `${page}`);
+    urlParams.append('_limit', `${limit}`);
+    const newUrl = `${GatewayApiUrl}?${urlParams.toString()}`;
+
+    const response = await _http.get<Gateway[]>(newUrl);
+    const hasNext =
+      response.headers.get('Link')?.includes('rel="next"') ?? false;
+
+    return { data: response.data, hasNext };
   };
 
   const create = async (gateway: GatewayBody): Promise<Gateway> => {

@@ -1,3 +1,4 @@
+import { ApiPaginate } from '@/modules/app/domain/Api';
 import type { Http } from '@/modules/app/domain/Http';
 import type {
   Peripheral,
@@ -15,9 +16,20 @@ export function createApiPeripheralRepository(
     return response.data;
   };
 
-  const getAll = async (): Promise<Peripheral[]> => {
-    const response = await _http.get<Peripheral[]>(PeripheralApiUrl);
-    return response.data;
+  const getAll = async (
+    page: number = 1,
+    limit: number = 10,
+  ): Promise<ApiPaginate<Peripheral[]>> => {
+    const urlParams = new URLSearchParams();
+    urlParams.append('_page', `${page}`);
+    urlParams.append('_limit', `${limit}`);
+    const newUrl = `${PeripheralApiUrl}?${urlParams.toString()}`;
+
+    const response = await _http.get<Peripheral[]>(newUrl);
+    const hasNext =
+      response.headers.get('Link')?.includes('rel="next"') ?? false;
+
+    return { data: response.data, hasNext };
   };
 
   const create = async (peripheral: PeripheralBody): Promise<Peripheral> => {

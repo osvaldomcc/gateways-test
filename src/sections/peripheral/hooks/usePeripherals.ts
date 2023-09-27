@@ -14,13 +14,17 @@ import type {
   Peripheral,
   PeripheralBody,
 } from '@/modules/peripheral/domain/Peripheral';
+import { ApiPaginate } from '@/modules/app/domain/Api';
 
 type Error = { message: string };
 
 const usePeripherals = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
-  const [peripherals, setPeripherals] = useState<Peripheral[]>([]);
+  const [peripherals, setPeripherals] = useState<ApiPaginate<Peripheral[]>>({
+    data: [],
+    hasNext: false,
+  });
   const [peripheral, setPeripheral] = useState<Peripheral | null>(null);
 
   const navigate = useNavigate();
@@ -41,11 +45,16 @@ const usePeripherals = () => {
     setError(err.message);
   };
 
-  const getAllPeripherals = async () => {
+  const getAllPeripherals = async (page?: number, limit?: number) => {
     try {
       reset();
-      const response = await getAll();
-      setPeripherals(response);
+      const response = await getAll(page, limit);
+      if (response.data.length > 0) {
+        setPeripherals({
+          data: [...peripherals.data, ...response.data],
+          hasNext: response.hasNext,
+        });
+      }
     } catch (err) {
       handleError(err as Error);
     } finally {
@@ -98,7 +107,13 @@ const usePeripherals = () => {
     try {
       reset();
       await remove(id);
-      setPeripherals(peripherals.filter((item) => item.id !== id));
+      const filteredPeripherals = peripherals.data.filter(
+        (item) => item.id !== id,
+      );
+      setPeripherals({
+        data: filteredPeripherals,
+        hasNext: peripherals.hasNext,
+      });
       Notify.success('The peripheral was deleted successfully');
     } catch (err) {
       handleError(err as Error);

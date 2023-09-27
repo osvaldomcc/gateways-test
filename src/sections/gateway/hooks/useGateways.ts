@@ -16,13 +16,17 @@ import { useNavigate } from 'react-router-dom';
 import { routes } from '@/sections/app/routes';
 import { Notify } from '@/sections/app/utils/Notification';
 import { getWithDependency } from '@/modules/gateway/application/get-with-dependency/getWithDependency';
+import { ApiPaginate } from '@/modules/app/domain/Api';
 
 type Error = { message: string };
 
 const useGateways = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
-  const [gateways, setGateways] = useState<Gateway[]>([]);
+  const [gateways, setGateways] = useState<ApiPaginate<Gateway[]>>({
+    data: [],
+    hasNext: false,
+  });
   const [gateway, setGateway] = useState<Gateway | null>(null);
   const [gatewayWithPeripherals, setGatewayWithPeripherals] =
     useState<GatewayWithDependency | null>(null);
@@ -46,11 +50,16 @@ const useGateways = () => {
     setError(err.message);
   };
 
-  const getAllGateways = async () => {
+  const getAllGateways = async (page?: number, limit?: number) => {
     try {
       reset();
-      const response = await getAll();
-      setGateways(response);
+      const response = await getAll(page, limit);
+      if (response.data.length > 0) {
+        setGateways({
+          data: [...gateways.data, ...response.data],
+          hasNext: response.hasNext,
+        });
+      }
     } catch (err) {
       handleError(err as Error);
     } finally {
@@ -100,7 +109,8 @@ const useGateways = () => {
     try {
       reset();
       await remove(id);
-      setGateways(gateways.filter((item) => item.id !== id));
+      const filteredGateways = gateways.data.filter((item) => item.id !== id);
+      setGateways({ data: filteredGateways, hasNext: gateways.hasNext });
       Notify.success('The gateway was deleted successfully');
     } catch (err) {
       handleError(err as Error);
