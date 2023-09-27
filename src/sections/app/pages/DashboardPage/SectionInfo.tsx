@@ -9,6 +9,8 @@ interface Props {
   sections: Section[];
 }
 
+const MAX_LIMIT = 10;
+
 const SectionInfo = ({ sections }: Props) => {
   const navigate = useNavigate();
 
@@ -27,7 +29,7 @@ const SectionInfo = ({ sections }: Props) => {
           <Card>
             <div className={styles.card__content}>
               <h2>{category}</h2>
-              <p>{amount}</p>
+              <p>{amount > MAX_LIMIT ? `${MAX_LIMIT}+` : amount}</p>
             </div>
           </Card>
         </a>
