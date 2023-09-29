@@ -5,4 +5,6 @@ export const ErrorMessages = {
     `${field} must follow the pattern ${format}`,
   enum: (field: string, options: string[]) =>
     `${field} must be ${options.join(' or ')}`,
+  minLength: (field: string, minLenght: number) =>
+    `${field} must be at least ${minLenght} characters`,
 };
