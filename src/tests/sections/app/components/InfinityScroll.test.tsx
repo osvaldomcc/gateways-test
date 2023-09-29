@@ -6,15 +6,18 @@ describe('InfinityScroll', () => {
   const disconnect = vi.fn();
   const observe = vi.fn();
 
-  beforeAll(() => {
-    const IntersectionObserverMock = vi.fn(() => ({
-      disconnect,
-      observe,
-    }));
+  beforeEach(() => {
+    const IntersectionObserverMock = vi.fn((callback) => {
+      callback([{ isIntersecting: true }]);
+      return {
+        disconnect,
+        observe,
+      };
+    });
     vi.stubGlobal('IntersectionObserver', IntersectionObserverMock);
   });
 
-  afterAll(() => {
+  afterEach(() => {
     vi.unstubAllGlobals();
     disconnect.mockReset();
     observe.mockReset();
@@ -30,6 +33,12 @@ describe('InfinityScroll', () => {
     const handleReachEnd = vi.fn();
     render(<InfinityScroll isLoading onReachEnd={handleReachEnd} />);
     expect(disconnect).toBeCalled();
+  });
+
+  it('should trigger handleReachEnd', () => {
+    const handleReachEnd = vi.fn();
+    render(<InfinityScroll isLoading onReachEnd={handleReachEnd} />);
+    expect(handleReachEnd).toBeCalled();
   });
 
   it('should show the spinner', () => {
