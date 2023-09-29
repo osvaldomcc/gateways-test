@@ -4,6 +4,8 @@
 
 ## ⚙️ Setup Enviroment
 
+## ⚙️ Setup Enviroment
+
 - Install [node](https://nodejs.org/es) 18.16.0 or higher version
 - Install [pnpm](https://pnpm.io/) `npm install -g pnpm`
 - Install json-server globally `npm install -g json-server` to mock database
