@@ -122,9 +122,9 @@ const DynamicTable = <T extends { id: number }>({
           <TableBody>
             {rows.map((row) => (
               <Row key={row.id}>
-                {columns.map(({ key }, index) => (
-                  <Cell key={index}>{row[key]}</Cell>
-                ))}
+                {columns.map(({ key }, index) => {
+                  return <Cell key={index}>{row[key] as string | number}</Cell>;
+                })}
                 {!hideActions && (
                   <Cell className={styles.buttons}>
                     {actions.map(({ title, action, icon }, index) => (
