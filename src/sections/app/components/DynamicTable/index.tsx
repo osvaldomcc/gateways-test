@@ -101,7 +101,7 @@ const DynamicTable = <T extends { id: number }>({
         </Button>
       )}
       {showBackButton && (
-        <div>
+        <div data-testid="backButton">
           <Button onPress={handleBackClick}>
             <IconChevronLeft size={20} />
           </Button>

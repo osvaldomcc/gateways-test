@@ -13,7 +13,12 @@ const Alert = ({ children, variant = 'primary' }: Props) => {
   };
 
   return (
-    <div className={`${styles.alert} ${variantsMap[variant]}`}>{children}</div>
+    <div
+      className={`${styles.alert} ${variantsMap[variant]}`}
+      role="alertdialog"
+    >
+      {children}
+    </div>
   );
 };
 
