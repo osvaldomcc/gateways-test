@@ -9,11 +9,14 @@ import { ErrorMessages } from '@/sections/app/utils/errors';
 export const PeripheralSchema = object({
   vendor: string()
     .required()
-    .matches(/[a-z]/gi, ErrorMessages.letters('vendor'))
+    .matches(/[^0-9]$/g, ErrorMessages.letters('vendor'))
     .min(NAME_MIN_LENGTH),
   date: string()
     .required()
-    .matches(/\d{2}\/\d{2}\/\d{4}$/, ErrorMessages.date('date')),
+    .matches(
+      /^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/(19|20|30)\d\d$/,
+      ErrorMessages.date('date'),
+    ),
   status: string()
     .oneOf(
       [Status.ONLINE, Status.OFFLINE],
